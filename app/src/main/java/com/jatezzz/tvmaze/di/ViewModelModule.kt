@@ -3,6 +3,7 @@ package com.jatezzz.tvmaze.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jatezzz.tvmaze.base.BaseViewModelFactory
+import com.jatezzz.tvmaze.list.ListViewModel
 import com.jatezzz.tvmaze.main.MainViewModel
 import dagger.Binds
 import dagger.Module
@@ -20,6 +21,11 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)
-    internal abstract fun solutionViewModel(viewModel: MainViewModel): ViewModel
+    internal abstract fun mainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ListViewModel::class)
+    internal abstract fun listViewModel(viewModel: ListViewModel): ViewModel
 
 }

@@ -1,4 +1,4 @@
-package com.jatezzz.tvmaze.main.response
+package com.jatezzz.tvmaze.list.response
 
 data class Links(
     val previousepisode: Previousepisode,

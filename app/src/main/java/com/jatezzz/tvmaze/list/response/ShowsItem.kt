@@ -1,4 +1,4 @@
-package com.jatezzz.tvmaze.main.response
+package com.jatezzz.tvmaze.list.response
 
 data class ShowsItem(
     val _links: Links,
@@ -8,7 +8,7 @@ data class ShowsItem(
     val externals: Externals,
     val genres: List<String>,
     val id: Int,
-    val image: Image,
+    val image: Image?,
     val language: String,
     val name: String,
     val network: Network,
