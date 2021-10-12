@@ -25,9 +25,17 @@ class ListAdapter(context: Context, private var shows: ArrayList<ShowsItem> = Ar
     }
 
     override fun onBindViewHolder(holder: ShowViewHolder, position: Int) {
-        val banner = shows[position]
-        holder.text.text = banner.name
-        banner.image?.medium?.let { glide.load(it).into(holder.image) }
+        val show = shows[position]
+        holder.text.text = show.name
+        show.image?.medium?.let { glide.load(it).into(holder.image) }
+    }
+
+    fun setData(data: List<ShowsItem>) {
+        val lastPosition = shows.size
+        shows = ArrayList()
+        notifyItemRangeRemoved(0, lastPosition)
+        shows.addAll(data)
+        notifyItemRangeInserted(0, shows.size)
     }
 
     fun addData(data: Collection<ShowsItem>) {

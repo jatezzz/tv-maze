@@ -2,6 +2,7 @@ package com.jatezzz.tvmaze.common
 
 import com.jatezzz.tvmaze.common.retrofit.ResultType
 import com.jatezzz.tvmaze.common.service.AssetsService
+import com.jatezzz.tvmaze.list.response.SearchItem
 import com.jatezzz.tvmaze.list.response.ShowsItem
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -15,5 +16,10 @@ class ShowsRemoteDataSource internal constructor(
     suspend fun fetchShowsList(page: Int): ResultType<List<ShowsItem>> = withContext(ioDispatcher) {
         return@withContext assetsService.fetchShowsList(page)
     }
+
+    suspend fun retrieveListByInput(text: String): ResultType<List<SearchItem>> =
+        withContext(ioDispatcher) {
+            return@withContext assetsService.searchShowsList(text)
+        }
 
 }
