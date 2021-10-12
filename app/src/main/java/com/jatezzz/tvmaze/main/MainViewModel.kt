@@ -8,6 +8,7 @@ import com.jatezzz.tvmaze.common.ShowsRemoteDataSource
 import com.jatezzz.tvmaze.common.retrofit.ResultType
 import com.jatezzz.tvmaze.main.response.ShowsItem
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -23,6 +24,7 @@ class MainViewModel @Inject constructor(private val dataSource: ShowsRemoteDataS
         _isLoading.value = true
         viewModelScope.launch {
             retrieveList()
+            Timber.d("List size: ${showsList.size}")
             _isLoading.value = false
         }
     }
