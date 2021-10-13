@@ -1,4 +1,4 @@
-package com.jatezzz.tvmaze.list
+package com.jatezzz.tvmaze.show
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,16 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.jatezzz.tvmaze.R
-import com.jatezzz.tvmaze.list.response.ShowsItem
 
-class ListAdapter(
+class EpisodeAdapter(
     context: Context,
-    val onClickAction: (ShowsItem) -> Unit,
-    private var shows: ArrayList<ShowsItem> = ArrayList()
+    val onClickAction: (ShowViewModel.EpisodeViewData) -> Unit,
+    private var episodes: ArrayList<ShowViewModel.EpisodeViewData> = ArrayList()
 ) :
-    RecyclerView.Adapter<ListAdapter.ShowViewHolder>() {
+    RecyclerView.Adapter<EpisodeAdapter.ShowViewHolder>() {
 
-    override fun getItemCount(): Int = shows.size
+    override fun getItemCount(): Int = episodes.size
 
     private var glide: RequestManager = Glide.with(context)
 
@@ -27,29 +26,23 @@ class ListAdapter(
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_show, parent, false)
         val holder = ShowViewHolder(view)
         holder.itemView.setOnClickListener {
-            onClickAction(shows[holder.adapterPosition])
+            onClickAction(episodes[holder.adapterPosition])
         }
         return holder
     }
 
     override fun onBindViewHolder(holder: ShowViewHolder, position: Int) {
-        val show = shows[position]
+        val show = episodes[position]
         holder.text.text = show.name
-        show.image?.medium?.let { glide.load(it).into(holder.image) }
+        glide.load(show.imageUrl).into(holder.image)
     }
 
-    fun setData(data: List<ShowsItem>) {
-        val lastPosition = shows.size
-        shows = ArrayList()
+    fun setData(data: List<ShowViewModel.EpisodeViewData>) {
+        val lastPosition = episodes.size
+        episodes = ArrayList()
         notifyItemRangeRemoved(0, lastPosition)
-        shows.addAll(data)
-        notifyItemRangeInserted(0, shows.size)
-    }
-
-    fun addData(data: Collection<ShowsItem>) {
-        val lastPosition = shows.size
-        shows.addAll(data)
-        notifyItemRangeInserted(lastPosition, data.size)
+        episodes.addAll(data)
+        notifyItemRangeInserted(0, episodes.size)
     }
 
     class ShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

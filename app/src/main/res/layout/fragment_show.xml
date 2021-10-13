@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.jatezzz.tvmaze.show.ShowViewModel" />
+
+    </data>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        android:verticalScrollbarPosition="right"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.incomingShow.name}"
+                tools:text="Name" />
+
+            <ImageView
+                android:id="@+id/image_view_poster"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/text_view_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewmodel.incomingShow.schedule}"
+                tools:text="Days and time during which the series airs" />
+
+            <TextView
+                android:id="@+id/text_view_genres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Genres" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_show" />
+
+            <TextView
+                android:id="@+id/text_view_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Summary" />
+
+            <TextView
+                android:id="@+id/text_view_episodes_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Episodes" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_show" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +52,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         model.isLoading.observe(viewLifecycleOwner, loadingObserver)
         model.incomingShowList.observe(viewLifecycleOwner, listObserver)
 
-        listAdapter = ListAdapter(requireContext())
+        listAdapter = ListAdapter(requireContext(), {
+            val action = ListFragmentDirections.actionListFragmentToShowFragment(it.id)
+            findNavController().navigate(action)
+        })
         binding.recyclerview.adapter = listAdapter
         binding.loadMoreButton.setOnClickListener {
             model.loadMoreShows()

@@ -7,5 +7,18 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.jatezzz.tvmaze.list.ListFragment"
-        android:label="ListFragment" />
+        android:label="ListFragment">
+        <action
+            android:id="@+id/action_listFragment_to_showFragment"
+            app:destination="@id/showFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showFragment"
+        android:name="com.jatezzz.tvmaze.show.ShowFragment"
+        android:label="ShowFragment">
+        <argument
+            android:name="show_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
 </navigation>
