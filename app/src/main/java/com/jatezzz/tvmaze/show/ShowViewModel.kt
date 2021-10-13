@@ -50,20 +50,22 @@ class ShowViewModel @Inject constructor(private val dataSource: ShowsRemoteDataS
             val episodes: List<Pair<Int, List<EpisodeViewData>>> =
                 episodeData?.map { episodeItem ->
                     EpisodeViewData(
-                        episodeItem.id,
-                        episodeItem.image.medium ?: "",
-                        episodeItem.name,
-                        episodeItem.season
+                        episodeItem.id ?: DEFAULT_ID,
+                        episodeItem.image?.medium ?: "",
+                        episodeItem.name ?: "",
+                        episodeItem.season ?: 0
                     )
                 }?.groupBy { data -> data.season }?.toList() ?: listOf()
 
+            val schedule =
+                "See it on: ${it.schedule?.days?.joinToString(separator = ", ")}. At: ${it.schedule?.time}"
             _incomingShow.value = ShowViewData(
-                genres = it.genres,
+                genres = it.genres ?: listOf(),
                 episodes = episodes,
                 imageUrl = it.image?.original ?: "",
-                name = it.name,
-                schedule = "See it on: ${it.schedule.days.joinToString(separator = ", ")}. At: ${it.schedule.time}",
-                summary = it.summary
+                name = it.name ?: "",
+                schedule = schedule,
+                summary = it.summary ?: ""
             )
         }
     }

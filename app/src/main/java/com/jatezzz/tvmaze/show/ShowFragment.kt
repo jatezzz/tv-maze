@@ -6,6 +6,7 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -79,8 +80,8 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
 
         episodeAdapter = EpisodeAdapter(requireContext(), {
-//            val action = ListFragmentDirections.actionListFragmentToShowFragment(it.id)
-//            findNavController().navigate(action)
+            val action = ShowFragmentDirections.actionShowFragmentToEpisodeFragment(it.id)
+            findNavController().navigate(action)
         })
         binding.recyclerViewEpisodes.setHasFixedSize(true)
         binding.recyclerViewEpisodes.addItemDecoration(

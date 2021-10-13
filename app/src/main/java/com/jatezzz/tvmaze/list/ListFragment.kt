@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.databinding.FragmentListBinding
+import com.jatezzz.tvmaze.show.DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -53,7 +54,8 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         model.incomingShowList.observe(viewLifecycleOwner, listObserver)
 
         listAdapter = ListAdapter(requireContext(), {
-            val action = ListFragmentDirections.actionListFragmentToShowFragment(it.id)
+            val action =
+                ListFragmentDirections.actionListFragmentToShowFragment(it.id ?: DEFAULT_ID)
             findNavController().navigate(action)
         })
         binding.recyclerview.adapter = listAdapter

@@ -33,4 +33,9 @@ class ShowsRemoteDataSource internal constructor(
             return@withContext assetsService.fetchShowEpisodes(id)
         }
 
+    suspend fun retrieveEpisodeDetail(id: Int): ResultType<EpisodeItem> =
+        withContext(ioDispatcher) {
+            return@withContext assetsService.fetchEpisodeDetail(id)
+        }
+
 }

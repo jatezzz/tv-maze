@@ -20,5 +20,17 @@
             android:name="show_id"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_showFragment_to_episodeFragment"
+            app:destination="@id/episodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeFragment"
+        android:name="com.jatezzz.tvmaze.episode.EpisodeFragment"
+        android:label="EpisodeFragment">
+        <argument
+            android:name="episodeId"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

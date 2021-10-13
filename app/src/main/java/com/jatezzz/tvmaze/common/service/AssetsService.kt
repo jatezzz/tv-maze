@@ -12,6 +12,7 @@ const val FETCH_SHOWS_LIST = "shows"
 const val SEARCH_SHOWS_LIST = "search/shows"
 const val FETCH_SHOW_DETAIL = "shows/{id}"
 const val FETCH_SHOW_EPISODE = "shows/{id}/episodes"
+const val FETCH_EPISODE_DETAIL = "episodes/{id}"
 
 interface AssetsService {
 
@@ -26,5 +27,8 @@ interface AssetsService {
 
     @GET(FETCH_SHOW_EPISODE)
     suspend fun fetchShowEpisodes(@Path("id") id: Int): ResultType<List<EpisodeItem>>
+
+    @GET(FETCH_EPISODE_DETAIL)
+    suspend fun fetchEpisodeDetail(@Path("id") id: Int): ResultType<EpisodeItem>
 
 }
