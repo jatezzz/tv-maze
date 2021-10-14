@@ -36,11 +36,10 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
     }
 
-
     private fun setupViews() {
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             val isOnDifferentTabs = binding.bottomNavigationView.selectedItemId != menuItem.itemId
-            if (!isNavigationRejected(isOnDifferentTabs)) {
+            if (isOnDifferentTabs) {
                 openFragment(generateFragmentFromId(menuItem.itemId))
             }
             true
@@ -48,24 +47,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         openFragment(generateFragmentFromId(R.id.action_shows))
     }
 
-
-    private fun isNavigationRejected(isOnDifferentTabs: Boolean): Boolean {
-        if (isOnDifferentTabs) {
-            return false
-        }
-        return retrieveCurrentShownFragment()?.isOnHomeScreen() ?: false
-    }
-
-    private fun retrieveCurrentShownFragment(): DashboardTabFragment? {
-        val filteredFragments =
-            childFragmentManager.fragments.filterIsInstance<DashboardTabFragment>()
-        return filteredFragments.takeIf { it.isNotEmpty() }?.first()
-    }
-
     private fun openFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction().replace(R.id.main_container_view, fragment).commit()
     }
-
 
     private fun generateFragmentFromId(itemId: Int): Fragment {
         return when (itemId) {
