@@ -12,6 +12,7 @@ import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.databinding.FragmentListBinding
 import com.jatezzz.tvmaze.show.DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -56,7 +57,11 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         listAdapter = ListAdapter(requireContext(), {
             val action =
                 ListFragmentDirections.actionListFragmentToShowFragment(it.id ?: DEFAULT_ID)
-            findNavController().navigate(action)
+            try {
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         })
         binding.recyclerview.adapter = listAdapter
         binding.loadMoreButton.setOnClickListener {
@@ -68,6 +73,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 model.filterByInput(binding.searchInput.text.toString())
             }
             true
+        }
+
+        binding.buttonSetKey.setOnClickListener {
+            val action =
+                ListFragmentDirections.actionListFragmentToAuthenticationFragment(true)
+            try {
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         }
 
         view.post {

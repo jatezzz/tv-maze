@@ -2,6 +2,7 @@ package com.jatezzz.tvmaze.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.jatezzz.tvmaze.authentication.AuthenticationViewModel
 import com.jatezzz.tvmaze.base.BaseViewModelFactory
 import com.jatezzz.tvmaze.episode.EpisodeViewModel
 import com.jatezzz.tvmaze.list.ListViewModel
@@ -39,5 +40,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EpisodeViewModel::class)
     internal abstract fun episodeViewModel(viewModel: EpisodeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AuthenticationViewModel::class)
+    internal abstract fun authenticationViewModel(viewModel: AuthenticationViewModel): ViewModel
 
 }

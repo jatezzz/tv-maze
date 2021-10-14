@@ -21,6 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <provider
+            android:authorities="${applicationId}.initprovider"
+            android:exported="false"
+            android:enabled="true"
+            android:name="com.jatezzz.tvmaze.common.persistance.StorageInitializer" />
     </application>
 
 </manifest>

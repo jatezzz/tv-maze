@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
+    android:background="#C52121"
+    android:orientation="vertical">
+
+  <TextView
+      android:id="@+id/reward_title"
+      android:layout_width="240dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:gravity="center"
+      android:paddingBottom="8dp"
+      android:text="@string/app_name" />
+
+  <TextView
+      android:id="@+id/message_text"
+      android:layout_width="240dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:paddingBottom="20dp"
+      android:text="@string/biometric_access_question" />
+
+  <Button
+      android:id="@+id/accept_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:text="Accept" />
+
+  <Button
+      android:id="@+id/cancel_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:text="Cancel" />
+
+  <Button
+      android:id="@+id/do_not_ask_again_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:text="do_not_ask_again" />
+
+</LinearLayout>

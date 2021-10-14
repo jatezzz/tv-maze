@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TVMaze</string>
+
+    <string name="generic_error">There has been an error</string>
+
+    <string name="biometric_access_question">Do you want to save your credentials with biometric access, which will allow you to access the application faster?</string>
+    <string name="do_not_ask_again">Do not ask again</string>
+    <string name="biometric_access">Access to biometrics will allow you to access the application faster.</string>
+
+    <string name="cancel_title">Cancel</string>
 </resources>

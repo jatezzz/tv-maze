@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_listFragment_to_showFragment"
             app:destination="@id/showFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_authenticationFragment"
+            app:destination="@id/authenticationFragment" />
     </fragment>
     <fragment
         android:id="@+id/showFragment"
@@ -32,5 +35,17 @@
             android:name="episodeId"
             app:argType="integer"
             android:defaultValue="-1" />
+    </fragment>
+    <fragment
+        android:id="@+id/authenticationFragment"
+        android:name="com.jatezzz.tvmaze.authentication.AuthenticationFragment"
+        android:label="AuthenticationFragment">
+        <action
+            android:id="@+id/action_authenticationFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <argument
+            android:name="isInSettingProcess"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

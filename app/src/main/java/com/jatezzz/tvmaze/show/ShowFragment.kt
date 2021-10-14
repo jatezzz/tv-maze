@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.databinding.FragmentShowBinding
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -81,7 +82,11 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
         episodeAdapter = EpisodeAdapter(requireContext(), {
             val action = ShowFragmentDirections.actionShowFragmentToEpisodeFragment(it.id)
-            findNavController().navigate(action)
+            try {
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                Timber.e(e)
+            }
         })
         binding.recyclerViewEpisodes.setHasFixedSize(true)
         binding.recyclerViewEpisodes.addItemDecoration(
