@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.jatezzz.tvmaze.dashboard.DashboardViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/dashboard_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/main_container_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_above="@id/bottom_navigation_view"
+            android:layout_alignParentTop="true"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation_view" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#FF5722"
+            app:itemIconTint="#227AFF"
+            app:itemTextColor="#FFEB3B"
+            app:labelVisibilityMode="labeled"
+            app:layout_anchor="@id/main_container_view"
+            app:layout_anchorGravity="bottom|center"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_navigation_menu" />
+
+    </RelativeLayout>
+
+</layout>

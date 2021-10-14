@@ -153,7 +153,7 @@ class AuthenticationFragment : Fragment(R.layout.fragment_authentication) {
 
     private fun goToListFragment() {
         val action =
-            AuthenticationFragmentDirections.actionAuthenticationFragmentToListFragment()
+            AuthenticationFragmentDirections.actionAuthenticationFragmentToDashboardFragment()
         try {
             findNavController().navigate(action)
         } catch (e: Exception) {

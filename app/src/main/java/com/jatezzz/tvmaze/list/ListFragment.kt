@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
+import com.jatezzz.tvmaze.dashboard.DashboardFragmentDirections
+import com.jatezzz.tvmaze.dashboard.DashboardTabFragment
 import com.jatezzz.tvmaze.databinding.FragmentListBinding
 import com.jatezzz.tvmaze.show.DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ListFragment : Fragment(R.layout.fragment_list) {
+class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -56,7 +57,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
         listAdapter = ListAdapter(requireContext(), {
             val action =
-                ListFragmentDirections.actionListFragmentToShowFragment(it.id ?: DEFAULT_ID)
+                DashboardFragmentDirections.actionDashboardFragmentToShowFragment(
+                    it.id ?: DEFAULT_ID
+                )
             try {
                 findNavController().navigate(action)
             } catch (e: Exception) {
@@ -77,7 +80,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
         binding.buttonSetKey.setOnClickListener {
             val action =
-                ListFragmentDirections.actionListFragmentToAuthenticationFragment(true)
+                DashboardFragmentDirections.actionDashboardFragmentToAuthenticationFragment(true)
             try {
                 findNavController().navigate(action)
             } catch (e: Exception) {
@@ -93,5 +96,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance(): ListFragment = ListFragment()
     }
 }
