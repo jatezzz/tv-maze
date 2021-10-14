@@ -4,6 +4,7 @@ import com.jatezzz.tvmaze.common.retrofit.ResultType
 import com.jatezzz.tvmaze.common.service.AssetsService
 import com.jatezzz.tvmaze.list.response.SearchItem
 import com.jatezzz.tvmaze.list.response.ShowsItem
+import com.jatezzz.tvmaze.peoplelist.response.SearchPeople
 import com.jatezzz.tvmaze.show.response.EpisodeItem
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +37,11 @@ class ShowsRemoteDataSource internal constructor(
     suspend fun retrieveEpisodeDetail(id: Int): ResultType<EpisodeItem> =
         withContext(ioDispatcher) {
             return@withContext assetsService.fetchEpisodeDetail(id)
+        }
+
+    suspend fun searchPeople(name: String): ResultType<List<SearchPeople>> =
+        withContext(ioDispatcher) {
+            return@withContext assetsService.searchPeople(name)
         }
 
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.databinding.FragmentDashboardBinding
 import com.jatezzz.tvmaze.list.ListFragment
+import com.jatezzz.tvmaze.peoplelist.PeopleListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -60,7 +61,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 ListFragment.newInstance()
             }
             R.id.action_people -> {
-                ListFragment.newInstance()
+                PeopleListFragment.newInstance()
             }
             else -> {
                 throw IllegalStateException("ILLEGAL_FRAGMENT_ERROR_MESSAGE")

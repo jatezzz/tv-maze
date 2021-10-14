@@ -1,4 +1,4 @@
-package com.jatezzz.tvmaze.list
+package com.jatezzz.tvmaze.peoplelist
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -10,7 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.dashboard.DashboardFragmentDirections
 import com.jatezzz.tvmaze.dashboard.DashboardTabFragment
-import com.jatezzz.tvmaze.databinding.FragmentListBinding
+import com.jatezzz.tvmaze.databinding.FragmentPeopleBinding
+import com.jatezzz.tvmaze.peoplelist.response.Person
 import com.jatezzz.tvmaze.show.DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -18,44 +19,38 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
+class PeopleListFragment : DashboardTabFragment(R.layout.fragment_people) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var model: ListViewModel
+    private lateinit var model: PeopleListViewModel
 
-    private var _binding: FragmentListBinding? = null
+    private var _binding: FragmentPeopleBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var listAdapter: ListAdapter
+    private lateinit var peopleListAdapter: PeopleListAdapter
 
     private val loadingObserver = Observer<Boolean> {
 
     }
 
-    private val listObserver = Observer<ListViewModel.ListViewData> { incomingData ->
-        if (incomingData.hasAppendableData) {
-            listAdapter.addData(incomingData.shows)
-            binding.loadMoreButton.visibility = View.VISIBLE
-        } else {
-            listAdapter.setData(incomingData.shows)
-            binding.loadMoreButton.visibility = View.GONE
-        }
+    private val peopleListObserver = Observer<List<Person>> { incomingData ->
+        peopleListAdapter.setData(incomingData)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _binding = FragmentListBinding.bind(view)
+        _binding = FragmentPeopleBinding.bind(view)
         binding.lifecycleOwner = this
 
-        model = ViewModelProvider(this, viewModelFactory)[ListViewModel::class.java]
+        model = ViewModelProvider(this, viewModelFactory)[PeopleListViewModel::class.java]
 
         model.isLoading.observe(viewLifecycleOwner, loadingObserver)
-        model.incomingShowList.observe(viewLifecycleOwner, listObserver)
+        model.incomingShowPeopleList.observe(viewLifecycleOwner, peopleListObserver)
 
-        listAdapter = ListAdapter(requireContext(), {
+        peopleListAdapter = PeopleListAdapter(requireContext(), {
             val action =
                 DashboardFragmentDirections.actionDashboardFragmentToShowFragment(
                     it.id ?: DEFAULT_ID
@@ -66,12 +61,10 @@ class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
                 Timber.e(e)
             }
         })
-        binding.recyclerview.adapter = listAdapter
-        binding.loadMoreButton.setOnClickListener {
-            model.loadMoreShows()
-        }
+        binding.recyclerview.adapter = peopleListAdapter
+
         binding.searchInput.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER)
-        binding.searchInput.setOnEditorActionListener { _, actionId, event ->
+        binding.searchInput.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 model.filterByInput(binding.searchInput.text.toString())
             }
@@ -87,10 +80,6 @@ class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
                 Timber.e(e)
             }
         }
-
-        view.post {
-            model.loadShows()
-        }
     }
 
     override fun onDestroyView() {
@@ -99,6 +88,6 @@ class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
     }
 
     companion object {
-        fun newInstance(): ListFragment = ListFragment()
+        fun newInstance(): PeopleListFragment = PeopleListFragment()
     }
 }
