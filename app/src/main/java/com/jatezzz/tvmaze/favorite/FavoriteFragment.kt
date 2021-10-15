@@ -1,6 +1,8 @@
 package com.jatezzz.tvmaze.favorite
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -90,6 +92,22 @@ class FavoriteFragment : DashboardTabFragment(R.layout.fragment_favorite) {
             model.remove(it)
         }, true)
         binding.recyclerview.adapter = listAdapter
+
+        binding.searchInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    model.filterByInput(s.toString())
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //Unused but required for object inheritance
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //Unused but required for object inheritance
+            }
+        })
     }
 
     override fun onStart() {

@@ -9,6 +9,7 @@ import com.jatezzz.tvmaze.databinding.FragmentDashboardBinding
 import com.jatezzz.tvmaze.favorite.FavoriteFragment
 import com.jatezzz.tvmaze.list.ListFragment
 import com.jatezzz.tvmaze.peoplelist.PeopleListFragment
+import com.jatezzz.tvmaze.settings.SettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -33,17 +34,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
         model = ViewModelProvider(this, viewModelFactory)[DashboardViewModel::class.java]
         setupViews()
-        view.post {
-
-        }
     }
 
     private fun setupViews() {
         binding.bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
-            val isOnDifferentTabs = binding.bottomNavigationView.selectedItemId != menuItem.itemId
-            if (isOnDifferentTabs) {
-                openFragment(generateFragmentFromId(menuItem.itemId))
-            }
+            openFragment(generateFragmentFromId(menuItem.itemId))
             true
         }
         openFragment(generateFragmentFromId(R.id.action_shows))
@@ -63,6 +58,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             }
             R.id.action_people -> {
                 PeopleListFragment.newInstance()
+            }
+            R.id.action_settings -> {
+                SettingsFragment.newInstance()
             }
             else -> {
                 throw IllegalStateException("ILLEGAL_FRAGMENT_ERROR_MESSAGE")

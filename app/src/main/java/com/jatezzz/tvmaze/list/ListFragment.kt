@@ -3,7 +3,6 @@ package com.jatezzz.tvmaze.list
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -71,21 +70,9 @@ class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
             model.loadMoreShows()
         }
         binding.searchInput.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER)
-        binding.searchInput.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                model.filterByInput(binding.searchInput.text.toString())
-            }
+        binding.searchInput.setOnEditorActionListener { _, _, _ ->
+            model.filterByInput(binding.searchInput.text.toString())
             true
-        }
-
-        binding.buttonSetKey.setOnClickListener {
-            val action =
-                DashboardFragmentDirections.actionDashboardFragmentToAuthenticationFragment(true)
-            try {
-                findNavController().navigate(action)
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
         }
     }
 

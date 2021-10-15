@@ -23,6 +23,8 @@ class FavoriteViewModel @Inject constructor(private val favoriteShowRepository: 
     val incomingShowList: LiveData<ViewData> = _incomingShowList
 
 
+    var savedShows: List<FavoriteShow> = listOf()
+
     fun loadShows() {
         _isLoading.value = true
         viewModelScope.launch {
@@ -38,7 +40,8 @@ class FavoriteViewModel @Inject constructor(private val favoriteShowRepository: 
         } else {
             arrayListOf()
         }
-        _incomingShowList.value = ViewData(result)
+        savedShows = result.sortedBy { it.name }
+        _incomingShowList.value = ViewData(savedShows)
     }
 
     fun remove(show: ShowsItem) {
@@ -49,6 +52,25 @@ class FavoriteViewModel @Inject constructor(private val favoriteShowRepository: 
 
     }
 
+    fun filterByInput(text: String) {
+        if (text.isEmpty()) {
+            _incomingShowList.value = ViewData(savedShows)
+            return
+        }
+        if (text.length <= 3) {
+            return
+        }
+        _isLoading.value = true
+        viewModelScope.launch {
+            retrieveListByInput(text)
+            _isLoading.value = false
+        }
+    }
+
+    private fun retrieveListByInput(text: String) {
+        val shows = savedShows.filter { it.name.startsWith(text, true) }.sortedBy { it.name }
+        _incomingShowList.value = ViewData(shows)
+    }
 
     data class ViewData(
         val shows: List<FavoriteShow>
