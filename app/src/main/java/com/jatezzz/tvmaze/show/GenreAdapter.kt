@@ -14,7 +14,7 @@ class GenreAdapter(private var shows: ArrayList<String> = ArrayList()) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_show, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_genre, parent, false)
         return ShowViewHolder(view)
     }
 

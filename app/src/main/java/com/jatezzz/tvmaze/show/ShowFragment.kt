@@ -66,6 +66,8 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
 
         binding.recyclerViewEpisodes.adapter = mSectionedAdapter
 
+        binding.checkBoxFavorite.isChecked = data.isFavorite
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,6 +104,11 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         binding.viewmodel = model
         val args: ShowFragmentArgs by navArgs()
         model.saveArgs(args.showId)
+
+        binding.checkBoxFavorite.setOnClickListener {
+            model.toggleFavorite()
+        }
+
         view.post {
             model.loadDetail()
         }

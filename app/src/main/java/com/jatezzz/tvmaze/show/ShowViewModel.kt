@@ -6,21 +6,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jatezzz.tvmaze.common.ShowsRemoteDataSource
 import com.jatezzz.tvmaze.common.retrofit.ResultType
+import com.jatezzz.tvmaze.data.FavoriteShowRepository
+import com.jatezzz.tvmaze.list.response.ShowsItem
+import com.jatezzz.tvmaze.show.response.EpisodeItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 const val DEFAULT_ID = -1
 
-class ShowViewModel @Inject constructor(private val dataSource: ShowsRemoteDataSource) :
+class ShowViewModel @Inject constructor(
+    private val dataSource: ShowsRemoteDataSource,
+    private val favoriteShowRepository: FavoriteShowRepository
+) :
     ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
     private var showId: Int = DEFAULT_ID
+    private var currentShow: ShowsItem? = null
 
     private val _incomingShow = MutableLiveData<ShowViewData>()
     val incomingShow: LiveData<ShowViewData> = _incomingShow
+
 
     fun loadDetail() {
         _isLoading.value = true
@@ -35,7 +43,7 @@ class ShowViewModel @Inject constructor(private val dataSource: ShowsRemoteDataS
             return
         }
         val showResult = dataSource.retrieveShowDetail(showId)
-        val showData = if (showResult is ResultType.Success) {
+        currentShow = if (showResult is ResultType.Success) {
             showResult.data
         } else {
             null
@@ -46,32 +54,54 @@ class ShowViewModel @Inject constructor(private val dataSource: ShowsRemoteDataS
         } else {
             null
         }
-        showData?.let { it ->
-            val episodes: List<Pair<Int, List<EpisodeViewData>>> =
-                episodeData?.map { episodeItem ->
-                    EpisodeViewData(
-                        episodeItem.id ?: DEFAULT_ID,
-                        episodeItem.image?.medium ?: "",
-                        episodeItem.name ?: "",
-                        episodeItem.season ?: 0
-                    )
-                }?.groupBy { data -> data.season }?.toList() ?: listOf()
-
+        val favResult = favoriteShowRepository.retrieveFavoriteById(showId.toLong())
+        val favData = if (favResult is ResultType.Success) {
+            favResult.data
+        } else {
+            null
+        }
+        currentShow?.let { it ->
             val schedule =
                 "See it on: ${it.schedule?.days?.joinToString(separator = ", ")}. At: ${it.schedule?.time}"
             _incomingShow.value = ShowViewData(
                 genres = it.genres ?: listOf(),
-                episodes = episodes,
+                episodes = retrieveEpisodes(episodeData),
                 imageUrl = it.image?.original ?: "",
                 name = it.name ?: "",
                 schedule = schedule,
-                summary = it.summary ?: ""
+                summary = it.summary ?: "",
+                isFavorite = favData != null
             )
         }
     }
 
+    private fun retrieveEpisodes(episodeData: List<EpisodeItem>?) =
+        episodeData?.map { episodeItem ->
+            EpisodeViewData(
+                episodeItem.id ?: DEFAULT_ID,
+                episodeItem.image?.medium ?: "",
+                episodeItem.name ?: "",
+                episodeItem.season ?: 0
+            )
+        }?.groupBy { data -> data.season }?.toList() ?: listOf()
+
     fun saveArgs(showId: Int) {
         this.showId = showId
+    }
+
+    fun toggleFavorite() {
+        val previousData = _incomingShow.value ?: return
+        val currentShow = currentShow ?: return
+        viewModelScope.launch {
+            if (!previousData.isFavorite) {
+                favoriteShowRepository.saveFavoriteShow(currentShow)
+            } else {
+                currentShow.id?.let { favoriteShowRepository.removeFavoriteShow(it) }
+            }
+            _incomingShow.value =
+                previousData.copy().apply { isFavorite = !previousData.isFavorite }
+        }
+
     }
 
     data class ShowViewData(
@@ -81,6 +111,7 @@ class ShowViewModel @Inject constructor(private val dataSource: ShowsRemoteDataS
         val name: String,
         val schedule: String,
         val summary: String,
+        var isFavorite: Boolean,
     )
 
     data class EpisodeViewData(

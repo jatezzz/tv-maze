@@ -26,5 +26,5 @@ sealed class ResultType<out R> {
  * `true` if [ResultType] is of type [ResultType.Success] & holds non-null [ResultType.Success.data].
  */
 val ResultType<*>.succeeded
-  get() = (this is ResultType.Success && data != null)
+  get() = (this is ResultType.Success)
           || this is ResultType.Complete
