@@ -8,4 +8,6 @@
     <string name="biometric_access">Access to biometrics will allow you to access the application faster.</string>
 
     <string name="cancel_title">Cancel</string>
+    <string name="developed_by_john_trujillo">Developed by John Trujillo</string>
+    <string name="set_key">Set Key</string>
 </resources>

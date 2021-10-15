@@ -7,12 +7,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp">
 
         <Button
             android:id="@+id/button_set_key"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Set Key" />
+            android:text="@string/set_key" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="@string/developed_by_john_trujillo" />
     </RelativeLayout>
 </layout>
