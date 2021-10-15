@@ -87,10 +87,11 @@ class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
                 Timber.e(e)
             }
         }
+    }
 
-        view.post {
-            model.loadShows()
-        }
+    override fun onStart() {
+        super.onStart()
+        model.loadShows()
     }
 
     override fun onDestroyView() {

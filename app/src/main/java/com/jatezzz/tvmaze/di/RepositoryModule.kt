@@ -17,7 +17,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesScenesRemoteDataSource(
+    fun providesShowsRemoteDataSource(
         assetsService: AssetsService,
         ioDispatcher: CoroutineDispatcher
     ): ShowsRemoteDataSource {
