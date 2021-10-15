@@ -4,19 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
+import com.jatezzz.tvmaze.base.BaseFragment
 import com.jatezzz.tvmaze.dashboard.DashboardFragmentDirections
-import com.jatezzz.tvmaze.dashboard.DashboardTabFragment
 import com.jatezzz.tvmaze.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 
 @AndroidEntryPoint
-class SettingsFragment : DashboardTabFragment(R.layout.fragment_settings) {
-
-    private var _binding: FragmentSettingsBinding? = null
-    private val binding get() = _binding!!
-
+class SettingsFragment : BaseFragment<FragmentSettingsBinding>(
+    R.layout.fragment_settings
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,11 +30,6 @@ class SettingsFragment : DashboardTabFragment(R.layout.fragment_settings) {
                 Timber.e(e)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

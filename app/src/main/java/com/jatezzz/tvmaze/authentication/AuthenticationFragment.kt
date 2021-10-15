@@ -3,12 +3,12 @@ package com.jatezzz.tvmaze.authentication
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.jatezzz.tvmaze.R
+import com.jatezzz.tvmaze.base.BaseFragment
 import com.jatezzz.tvmaze.biometric.BiometricAccessPopUp
 import com.jatezzz.tvmaze.biometric.BiometricWrapper
 import com.jatezzz.tvmaze.common.persistance.KeyType
@@ -18,30 +18,29 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
+const val REGISTRATION_DONE = "REGISTRATION_DONE"
+const val LOGIN_DONE = "LOGIN_DONE"
+const val ERROR = "ERROR"
+
 @AndroidEntryPoint
-class AuthenticationFragment : Fragment(R.layout.fragment_authentication) {
+class AuthenticationFragment :
+    BaseFragment<FragmentAuthenticationBinding>(R.layout.fragment_authentication) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var model: AuthenticationViewModel
 
-    private var _binding: FragmentAuthenticationBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var biometricWrapper: BiometricWrapper
 
     private var biometricAccessPopUp: BiometricAccessPopUp? = null
 
-    private val loadingObserver = Observer<Boolean> {
-
-    }
     private val exitObserver = Observer<String> {
         when (it) {
-            "REGISTRATION_DONE" -> {
+            REGISTRATION_DONE -> {
                 startBiometricRegistration()
             }
-            "LOGIN_DONE" -> {
+            LOGIN_DONE -> {
                 goToListFragment()
             }
             else -> {

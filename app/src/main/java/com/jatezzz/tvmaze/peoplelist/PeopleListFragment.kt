@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
+import com.jatezzz.tvmaze.base.BaseFragment
 import com.jatezzz.tvmaze.dashboard.DashboardFragmentDirections
-import com.jatezzz.tvmaze.dashboard.DashboardTabFragment
 import com.jatezzz.tvmaze.databinding.FragmentPeopleBinding
 import com.jatezzz.tvmaze.peoplelist.response.Person
 import com.jatezzz.tvmaze.show.DEFAULT_ID
@@ -18,21 +18,14 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class PeopleListFragment : DashboardTabFragment(R.layout.fragment_people) {
+class PeopleListFragment : BaseFragment<FragmentPeopleBinding>(R.layout.fragment_people) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var model: PeopleListViewModel
 
-    private var _binding: FragmentPeopleBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var peopleListAdapter: PeopleListAdapter
-
-    private val loadingObserver = Observer<Boolean> {
-
-    }
 
     private val peopleListObserver = Observer<List<Person>> { incomingData ->
         peopleListAdapter.setData(incomingData)
@@ -67,11 +60,6 @@ class PeopleListFragment : DashboardTabFragment(R.layout.fragment_people) {
             model.filterByInput(binding.searchInput.text.toString())
             true
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

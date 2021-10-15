@@ -1,6 +1,7 @@
 package com.jatezzz.tvmaze.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -8,6 +9,7 @@ import androidx.navigation.Navigation
 import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.common.persistance.KeyType
 import com.jatezzz.tvmaze.common.persistance.SecureStorage
+import com.jatezzz.tvmaze.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,9 +24,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
+
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         model = ViewModelProvider(this, viewModelFactory)[MainViewModel::class.java]
 
         navController = Navigation.findNavController(this, R.id.main_nav_host_fragment)
@@ -35,5 +44,13 @@ class MainActivity : AppCompatActivity() {
             graph.startDestination = R.id.authenticationFragment
         }
         navController.graph = graph
+    }
+
+    fun updateLoading(isLoading: Boolean) {
+        binding.loading.visibility = if (isLoading) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
     }
 }

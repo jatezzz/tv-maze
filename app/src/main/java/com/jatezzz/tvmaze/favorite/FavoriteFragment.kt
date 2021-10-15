@@ -8,8 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
+import com.jatezzz.tvmaze.base.BaseFragment
 import com.jatezzz.tvmaze.dashboard.DashboardFragmentDirections
-import com.jatezzz.tvmaze.dashboard.DashboardTabFragment
 import com.jatezzz.tvmaze.databinding.FragmentFavoriteBinding
 import com.jatezzz.tvmaze.list.ListAdapter
 import com.jatezzz.tvmaze.list.response.Image
@@ -21,21 +21,14 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class FavoriteFragment : DashboardTabFragment(R.layout.fragment_favorite) {
+class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(R.layout.fragment_favorite) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var model: FavoriteViewModel
 
-    private var _binding: FragmentFavoriteBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var listAdapter: ListAdapter
-
-    private val loadingObserver = Observer<Boolean> {
-
-    }
 
     private val listObserver = Observer<FavoriteViewModel.ViewData> { incomingData ->
         listAdapter.setData(incomingData.shows.map {

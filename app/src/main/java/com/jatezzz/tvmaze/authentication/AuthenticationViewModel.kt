@@ -23,15 +23,15 @@ class AuthenticationViewModel @Inject constructor() : ViewModel() {
     fun submitPin(pinNumber: String) {
         if (isInSettingProcess) {
             SecureStorage.putString(KeyType.PASSWORD, pinNumber)
-            _isExitRequested.value = "REGISTRATION_DONE"
+            _isExitRequested.value = REGISTRATION_DONE
             return
         }
         val savedPassword = SecureStorage.getString(KeyType.PASSWORD)
         if (savedPassword == pinNumber) {
-            _isExitRequested.value = "LOGIN_DONE"
+            _isExitRequested.value = LOGIN_DONE
             return
         }
-        _isExitRequested.value = "ERROR"
+        _isExitRequested.value = ERROR
     }
 
 }

@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jatezzz.tvmaze.R
+import com.jatezzz.tvmaze.base.BaseFragment
 import com.jatezzz.tvmaze.dashboard.DashboardFragmentDirections
-import com.jatezzz.tvmaze.dashboard.DashboardTabFragment
 import com.jatezzz.tvmaze.databinding.FragmentListBinding
 import com.jatezzz.tvmaze.show.DEFAULT_ID
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,21 +17,14 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
+class ListFragment : BaseFragment<FragmentListBinding>(R.layout.fragment_list) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var model: ListViewModel
 
-    private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var listAdapter: ListAdapter
-
-    private val loadingObserver = Observer<Boolean> {
-
-    }
 
     private val listObserver = Observer<ListViewModel.ListViewData> { incomingData ->
         if (incomingData.hasAppendableData) {
@@ -79,11 +72,6 @@ class ListFragment : DashboardTabFragment(R.layout.fragment_list) {
     override fun onStart() {
         super.onStart()
         model.loadShows()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     companion object {

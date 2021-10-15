@@ -3,7 +3,6 @@ package com.jatezzz.tvmaze.show
 import android.os.Bundle
 import android.view.View
 import androidx.core.text.HtmlCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.jatezzz.tvmaze.R
+import com.jatezzz.tvmaze.base.BaseFragment
 import com.jatezzz.tvmaze.databinding.FragmentShowBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -19,22 +19,15 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ShowFragment : Fragment(R.layout.fragment_show) {
+class ShowFragment : BaseFragment<FragmentShowBinding>(R.layout.fragment_show) {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var model: ShowViewModel
 
-    private var _binding: FragmentShowBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var episodeAdapter: EpisodeAdapter
     private lateinit var genreAdapter: GenreAdapter
-
-    private val loadingObserver = Observer<Boolean> {
-
-    }
 
     private val dataObserver = Observer<ShowViewModel.ShowViewData> { data ->
         binding.textViewSummary.text =
@@ -114,8 +107,4 @@ class ShowFragment : Fragment(R.layout.fragment_show) {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
