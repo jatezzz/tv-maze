@@ -17,10 +17,7 @@ class FavoriteShowRepository @Inject constructor(
         return fetchFavoriteShowList as ResultType.Error
     }
 
-    suspend fun retrieveFavoriteShowList(
-        fromLocal: Boolean,
-        userId: Long = 0
-    ): ResultType<List<FavoriteShow>> {
+    suspend fun retrieveFavoriteShowList(): ResultType<List<FavoriteShow>> {
         val fetchFavoriteShowList = favoriteShowsLocalDataSource.fetchFavoriteShowList()
         if (fetchFavoriteShowList.succeeded) {
             return ResultType.Success((fetchFavoriteShowList as ResultType.Success).data)

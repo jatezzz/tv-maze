@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,8 @@ import com.jatezzz.tvmaze.list.response.ShowsItem
 class ListAdapter(
     context: Context,
     val onClickAction: (ShowsItem) -> Unit,
+    val onDeleteAction: (ShowsItem) -> Unit = {},
+    private val shouldAllowDeletion: Boolean = false,
     private var shows: ArrayList<ShowsItem> = ArrayList()
 ) :
     RecyclerView.Adapter<ListAdapter.ShowViewHolder>() {
@@ -35,6 +38,10 @@ class ListAdapter(
     override fun onBindViewHolder(holder: ShowViewHolder, position: Int) {
         val show = shows[position]
         holder.text.text = show.name
+        holder.deleteButton.visibility = if (shouldAllowDeletion) View.VISIBLE else View.GONE
+        holder.deleteButton.setOnClickListener {
+            onDeleteAction(show)
+        }
         show.image?.medium?.let { glide.load(it).into(holder.image) }
     }
 
@@ -55,6 +62,7 @@ class ListAdapter(
     class ShowViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val text: TextView = itemView.findViewById(R.id.name)
         val image: ImageView = itemView.findViewById(R.id.image)
+        val deleteButton: Button = itemView.findViewById(R.id.button_delete)
     }
 
 }

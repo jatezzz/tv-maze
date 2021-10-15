@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.jatezzz.tvmaze.R
 import com.jatezzz.tvmaze.databinding.FragmentDashboardBinding
+import com.jatezzz.tvmaze.favorite.FavoriteFragment
 import com.jatezzz.tvmaze.list.ListFragment
 import com.jatezzz.tvmaze.peoplelist.PeopleListFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,7 +59,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 ListFragment.newInstance()
             }
             R.id.action_favorites -> {
-                ListFragment.newInstance()
+                FavoriteFragment.newInstance()
             }
             R.id.action_people -> {
                 PeopleListFragment.newInstance()

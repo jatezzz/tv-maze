@@ -24,17 +24,16 @@ class EpisodeAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_show, parent, false)
-        val holder = ShowViewHolder(view)
-        holder.itemView.setOnClickListener {
-            onClickAction(episodes[holder.adapterPosition])
-        }
-        return holder
+        return ShowViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ShowViewHolder, position: Int) {
         val show = episodes[position]
         holder.text.text = show.name
         glide.load(show.imageUrl).into(holder.image)
+        holder.itemView.setOnClickListener {
+            onClickAction(show)
+        }
     }
 
     fun setData(data: List<ShowViewModel.EpisodeViewData>) {

@@ -6,6 +6,7 @@ import com.jatezzz.tvmaze.authentication.AuthenticationViewModel
 import com.jatezzz.tvmaze.base.BaseViewModelFactory
 import com.jatezzz.tvmaze.dashboard.DashboardViewModel
 import com.jatezzz.tvmaze.episode.EpisodeViewModel
+import com.jatezzz.tvmaze.favorite.FavoriteViewModel
 import com.jatezzz.tvmaze.list.ListViewModel
 import com.jatezzz.tvmaze.main.MainViewModel
 import com.jatezzz.tvmaze.peoplelist.PeopleListViewModel
@@ -57,5 +58,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PeopleListViewModel::class)
     internal abstract fun peopleListViewModel(viewModel: PeopleListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteViewModel::class)
+    internal abstract fun favoriteViewModel(viewModel: FavoriteViewModel): ViewModel
 
 }
