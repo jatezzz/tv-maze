@@ -1,7 +1,9 @@
 package com.jatezzz.tvmaze.main
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -23,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var model: MainViewModel
 
     private lateinit var navController: NavController
-
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -52,5 +53,12 @@ class MainActivity : AppCompatActivity() {
         } else {
             View.GONE
         }
+    }
+
+    fun hideKeyboard() {
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = currentFocus ?: View(this)
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

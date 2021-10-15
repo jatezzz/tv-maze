@@ -18,6 +18,15 @@ open class BaseFragment<T>(@LayoutRes val contentLayoutId: Int) : Fragment(conte
         return this.activity as MainActivity
     }
 
+    override fun onStart() {
+        super.onStart()
+        hideKeyboard()
+    }
+
+    fun hideKeyboard() {
+        getBaseActivity().hideKeyboard()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

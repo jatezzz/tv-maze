@@ -2,6 +2,7 @@ package com.jatezzz.tvmaze.show
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,7 @@ class ShowFragment : BaseFragment<FragmentShowBinding>(R.layout.fragment_show) {
             HtmlCompat.fromHtml(data.summary, HtmlCompat.FROM_HTML_MODE_LEGACY)
         Glide.with(this)
             .load(data.imageUrl)
-            .into(binding.imageViewPoster)
+            .into(binding.detailImage)
         genreAdapter.setData(data.genres)
 
         val sections: MutableList<SimpleSectionedRecyclerViewAdapter.Section> = ArrayList()
@@ -57,9 +58,31 @@ class ShowFragment : BaseFragment<FragmentShowBinding>(R.layout.fragment_show) {
         )
         mSectionedAdapter.setSections(sections.toTypedArray())
 
+
+        binding.toolbar.setNavigationOnClickListener { _ ->
+            findNavController().navigateUp()
+        }
+
         binding.recyclerViewEpisodes.adapter = mSectionedAdapter
 
-        binding.checkBoxFavorite.isChecked = data.isFavorite
+        if (data.isFavorite) {
+            binding.fab.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_love_heart_symbol,
+                    null
+                )
+            )
+        } else {
+            binding.fab.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_favorite,
+                    null
+                )
+            )
+        }
+
 
     }
 
@@ -98,7 +121,7 @@ class ShowFragment : BaseFragment<FragmentShowBinding>(R.layout.fragment_show) {
         val args: ShowFragmentArgs by navArgs()
         model.saveArgs(args.showId)
 
-        binding.checkBoxFavorite.setOnClickListener {
+        binding.fab.setOnClickListener {
             model.toggleFavorite()
         }
 
