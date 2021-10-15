@@ -14,6 +14,11 @@
         <action
             android:id="@+id/action_dashboardFragment_to_authenticationFragment"
             app:destination="@id/authenticationFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_personFragment"
+            app:destination="@id/personFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/dashboardFragment" />
     </fragment>
     <fragment
         android:id="@+id/showFragment"
@@ -25,7 +30,8 @@
             android:defaultValue="-1" />
         <action
             android:id="@+id/action_showFragment_to_episodeFragment"
-            app:destination="@id/episodeFragment" />
+            app:destination="@id/episodeFragment"
+            app:popUpTo="@id/showFragment" />
     </fragment>
     <fragment
         android:id="@+id/episodeFragment"
@@ -47,5 +53,18 @@
             android:name="isInSettingProcess"
             app:argType="boolean"
             android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.jatezzz.tvmaze.person.PersonFragment"
+        android:label="PersonFragment">
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_personFragment_to_showFragment"
+            app:destination="@id/showFragment"
+            app:popUpTo="@id/personFragment" />
     </fragment>
 </navigation>

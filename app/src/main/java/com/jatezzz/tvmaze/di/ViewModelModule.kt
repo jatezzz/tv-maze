@@ -10,6 +10,7 @@ import com.jatezzz.tvmaze.favorite.FavoriteViewModel
 import com.jatezzz.tvmaze.list.ListViewModel
 import com.jatezzz.tvmaze.main.MainViewModel
 import com.jatezzz.tvmaze.peoplelist.PeopleListViewModel
+import com.jatezzz.tvmaze.person.PersonViewModel
 import com.jatezzz.tvmaze.show.ShowViewModel
 import dagger.Binds
 import dagger.Module
@@ -63,5 +64,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavoriteViewModel::class)
     internal abstract fun favoriteViewModel(viewModel: FavoriteViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PersonViewModel::class)
+    internal abstract fun personViewModel(viewModel: PersonViewModel): ViewModel
 
 }

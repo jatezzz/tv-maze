@@ -51,7 +51,7 @@ class PeopleListFragment : DashboardTabFragment(R.layout.fragment_people) {
 
         peopleListAdapter = PeopleListAdapter(requireContext(), {
             val action =
-                DashboardFragmentDirections.actionDashboardFragmentToShowFragment(
+                DashboardFragmentDirections.actionDashboardFragmentToPersonFragment(
                     it.id ?: DEFAULT_ID
                 )
             try {

@@ -5,6 +5,7 @@ import com.jatezzz.tvmaze.list.response.Image
 import com.jatezzz.tvmaze.list.response.Links
 
 data class Person(
+    val _embedded: Embedded?,
     val _links: Links?,
     val birthday: String?,
     val country: Country?,
