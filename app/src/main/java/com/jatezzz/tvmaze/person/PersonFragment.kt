@@ -58,6 +58,9 @@ class PersonFragment : BaseFragment<FragmentPersonBinding>(R.layout.fragment_per
         })
         binding.recyclerview.adapter = listAdapter
 
+        binding.toolbar.setNavigationOnClickListener { _ ->
+            findNavController().navigateUp()
+        }
         val args: PersonFragmentArgs by navArgs()
         model.saveArgs(args.id)
         view.post {

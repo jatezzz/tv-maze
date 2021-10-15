@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.jatezzz.tvmaze.R
@@ -40,6 +41,11 @@ class EpisodeFragment : BaseFragment<FragmentEpisodeBinding>(R.layout.fragment_e
         binding.viewmodel = model
         val args: EpisodeFragmentArgs by navArgs()
         model.saveArgs(args.episodeId)
+
+        binding.toolbar.setNavigationOnClickListener { _ ->
+            findNavController().navigateUp()
+        }
+
         view.post {
             model.loadDetail()
         }

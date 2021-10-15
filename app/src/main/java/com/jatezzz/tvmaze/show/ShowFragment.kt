@@ -58,7 +58,6 @@ class ShowFragment : BaseFragment<FragmentShowBinding>(R.layout.fragment_show) {
         )
         mSectionedAdapter.setSections(sections.toTypedArray())
 
-
         binding.toolbar.setNavigationOnClickListener { _ ->
             findNavController().navigateUp()
         }

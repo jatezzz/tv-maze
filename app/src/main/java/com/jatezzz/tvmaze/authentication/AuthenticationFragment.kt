@@ -72,7 +72,9 @@ class AuthenticationFragment :
         val args: AuthenticationFragmentArgs by navArgs()
         model.saveArgs(args.isInSettingProcess)
 
-        if (SecureStorage.getString(KeyType.PASSWORD).isNotEmpty() && !model.isInSettingProcess) {
+        if (SecureStorage.getString(KeyType.PASSWORD)
+                .isNotEmpty() && !model.isInSettingProcess && isBiometricAvailable()
+        ) {
             binding.biometricButton.visibility = View.VISIBLE
         }
     }
